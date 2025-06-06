@@ -130,7 +130,6 @@ Gera `risk_model.pkl`; reinicie o Streamlit.
 ---
 
 ## **Dependências diretas do projeto:**
-(Não estão sendo listadas aquelas utilizadas pelo Google Colab no Notebook da Fase 6 e que são transitivas)
 - streamlit
 - pandas
 - numpy
