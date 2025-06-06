@@ -6,7 +6,7 @@
 
 <br>
 
-# FASE 7 - Cap 1 - A Consolidação de um Sistema
+# FASE 7 - Global Solution - 2º Semestre
 
 ## Nome do grupo
 
@@ -30,52 +30,129 @@
 
 ## 📜 Descrição
 
-### Entrega 1: Aprimoramento do Dashboard da Fase 4
+---
 
-Foi criado um dashboard unificado para expor via interface web, usando streamlit, os programas criados nas fases 1, 2 (Sistema de Gestão de Silos e Modelos de Banco de Dados usados nos demais programas), 3 e 6.
+# 🌊 Flood Monitor – FIAP GS 2025
 
-Cada um dos programas e entregáveis está estruturado em uma página individualizada com um submenu próprio para acessar cada uma das funcionalidades.
+**Prever · Monitorar · Alertar**
 
-Nos programas em que se exige conexão com Banco de Dados, um formulário para preenchimento de **usuário e senha do BANCO DE DADOS ORACLE DA FIAP**, será apresentado, sem o qual não será possível prosseguir.
-A aplicação criará automaticamente as entidades e DER no Banco de Dados para então importar os dados nesse modelo e então as funcionalidades estarem disponíveis.
+Prova de conceito (PoC) integrada que:
 
-As credenciais do Banco de Dados acabm sendo gravadas em um arquivo txt na estrutura da pasta do programa para posterior uso no mesmo programa.
-
-**IMPORTANTE**: A página da Fase 7 implementa e executa corretamente o código criado para o treinamento das imagens, validação e todos os passos entregues, porém feitos no Google Colab. Pode demorar de 30 até 60 minutos (ou mais) para executá-los localmente, mas é possível. As imagens e demais arquivos utilizados estão na estrutura de pastas abaixo de /src/fase6 e por esse motivo o download ou clonagem do repositório pode demorar uns 2 min. Recomendamos executar pelo Google Colab no link já passado ou utilizando as pastas e importando o .ipynb constante dessa mesma estrutura de pastas.
-
-#### Link para o vídeo de apresentação do projeto: <a href="https://www.youtube.com/watch?v=IPauWJaBCb8">Video não listado no Youtube</a>
+| Camada | Tecnologias | Função |
+|--------|-------------|--------|
+| **Borda / IoT** | ESP32 DevKit‑C • HC‑SR04 • DHT‑22 | Mede nível d’água, temperatura e UR (real ou simulado) |
+| **Conectividade** | MQTT (`broker.hivemq.com`) | Telemetria JSON em tempo real |
+| **Dados & IA** | Python / pandas / scikit‑learn | Random Forest treinado com chuva histórica para prever risco |
+| **Interface** | Streamlit | Dashboard ao vivo (métricas + gráfico) |
+| **Notificação** | SendGrid SMTP | E‑mail quando o modelo indica **risco = 1** |
 
 ---
 
-### Entrega 2:
+## 1 · Estrutura do repositório
 
-Foi implementada integração com o AWS SNS para envio de mensagens por email para cada nova leitura de sensor sendo realizada no programa entregue na FASE 3. Da mesma forma, uma página para cadastro de assinatura de email e envio de mensagem aberta a todos os subscritos foi colocada para teste.
-
-**OBS.: As credencias da conta utilizada na AWS para esse envio precisam estar em um arquivo .env que deve ser criado na raiz do projeto. Essas chaves serão passadas no mesmo arquivo e em um txt que estarão no upload da área de entrega da atividade no portal on.fiap.com.**
-
-## **Abaixo um exemplo desse arquivo .env:**
+```text
+.
+├── arduino/
+│   └── FloodDemo_v2.4.ino
+├── data/
+│   └── dataset_gs.csv
+├── python/
+│   ├── preprocess_dataset.py
+│   ├── train_model.py
+│   └── flood_dashboard.py
+└── README.md
 ```
-AWS_REGION=us-east-1
-AWS_ACCESS_KEY=<CHAVE AQUI>
-AWS_SECRET_KEY=<CHAVE SECRETA AQUI>
+
+---
+
+## 2 · Teste rápido (modo simulado)
+
+```bash
+git clone https://github.com/<seu-usuario>/flood-monitor.git
+cd flood-monitor
+
+python -m venv env
+# Linux/macOS
+source env/bin/activate
+# Windows
+env\Scripts\activate
+
+pip install (env) pip install pandas paho-mqtt streamlit scikit-learn joblib       # requerimentos
+
+export SENDGRID_KEY="SG.xxxxx"        # PowerShell: $env:SENDGRID_KEY="SG.xxxxx"
+
+python -m streamlit run python/flood_dashboard.py
+# abre http://localhost:8501
 ```
+
+1. No Wokwi (https://wokwi.com/projects/433046881861287937>) abra `arduino/FloodDemo_v2.4.ino` (SIMULATION = `true`).  
+2. Clique **Start**.  
+3. O painel atualiza; quando **risco = 1** chega e‑mail de alerta.
+
+---
+
+## 3 · Hardware real
+
+| Pino ESP32 | Sensor | Descrição |
+|-----------:|--------|-----------|
+| 5  | HC‑SR04 TRIG | Pulso de disparo |
+| 18 | HC‑SR04 ECHO | Pulso de eco |
+| 15 | DHT‑22 DATA  | Temp / UR |
+| 27 | Buzzer       | Alarme |
+| 2  | LED on‑board | Atividade |
+| 3V3 / 5V | Vcc     | Alimentação |
+| GND | GND         | Referência |
+
+No firmware defina `#define SIMULATION false`, compile e grave.
+
+---
+
+## 4 · Re‑treinar o modelo
+
+```bash
+cd python
+python preprocess_dataset.py
+python train_model.py
+```
+Gera `risk_model.pkl`; reinicie o Streamlit.
+
+---
+
+## 5 · Variáveis de ambiente principais
+
+| Variável | Uso | Obrigatória |
+|----------|-----|-------------|
+| `SENDGRID_KEY` | API key SendGrid | ✔ |
+| `EMAIL_FROM`   | Remetente verificado (opcional) | |
+| `EMAIL_TO`     | Destinatário (opcional) | |
+| `MQTT_BROKER`  | Broker MQTT (default HiveMQ) | |
+
+---
 
 ## **Dependências diretas do projeto:**
 (Não estão sendo listadas aquelas utilizadas pelo Google Colab no Notebook da Fase 6 e que são transitivas)
 - streamlit
 - pandas
-- plotly
-- oracledb
-- requests
-- boto3
 - numpy
-- torch
-- torchvision
-- opencv-python (cv2)
-- pillow (PIL)
-- matplotlib
-- seaborn
-- PyYAML (yaml)
+- paho.mqtt.client
+- json
+- time
+- queue
+- logging
+- random
+- joblib
+- os
+- smtplib
+- email.mime.text
+- collections
+
+## 6 · Roteiro do vídeo (≤ 6 min)
+
+1. **Intro (0 :30)** – problema + diagrama.  
+2. **Wokwi + Dashboard** – nível sobe ⇒ alerta.  
+3. **ML** ativa risco ⇒ e‑mail chega.  
+4. Destaque de código.  
+5. Encerramento e próximos passos.
 
 ## 📁 Estrutura de pastas
 
@@ -92,7 +169,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 ## 🗃 Histórico de lançamentos
 
-- 0.1.0 - 23/05/2025
+- 0.1.0 - 06/06/2025
 
 ## 📋 Licença
 
