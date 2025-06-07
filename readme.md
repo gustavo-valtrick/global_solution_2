@@ -85,7 +85,7 @@ python -m streamlit run python/flood_dashboard.py
 # abre http://localhost:8501
 ```
 
-1. No Wokwi (https://wokwi.com/projects/433046881861287937>) abra `GS 2025 FloodDemo (sketch.ino)` (SIMULATION = `true`).  
+1. No Wokwi (https://wokwi.com/projects/433046881861287937) abra `GS 2025 FloodDemo (sketch.ino)` (SIMULATION = `true`).  
 2. Clique **Start**.  
 3. O painel atualiza; quando **risco = 1** chega e‑mail de alerta.
 
