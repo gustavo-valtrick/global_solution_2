@@ -92,7 +92,6 @@ python -m streamlit run python/flood_dashboard.py
 ---
 ## Desenho do Circuito Completo
 ![Circuito Completo](assets/circuitocompleto.png)
-## Link para o vídeo de apresentação do projeto: <a href="https://youtu.be/qQUlFLa-TEE">Video não listado no Youtube</a>
 
 ## 3 · Hardware real
 
@@ -148,13 +147,8 @@ Gera `risk_model.pkl`; reinicie o Streamlit.
 - email.mime.text
 - collections
 
-## 6 · Roteiro do vídeo (≤ 6 min)
-
-1. **Intro (0 :30)** – problema + diagrama.  
-2. **Wokwi + Dashboard** – nível sobe ⇒ alerta.  
-3. **ML** ativa risco ⇒ e‑mail chega.  
-4. Destaque de código.  
-5. Encerramento e próximos passos.
+## 6 · Video
+## Link para o vídeo de apresentação do projeto: <a href="https://youtu.be/qQUlFLa-TEE">Video não listado no Youtube</a>
 
 ## 📁 Estrutura de pastas
 
