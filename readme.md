@@ -85,7 +85,7 @@ python -m streamlit run python/flood_dashboard.py
 # abre http://localhost:8501
 ```
 
-1. No Wokwi (https://wokwi.com/projects/433046881861287937>) abra `arduino/FloodDemo_v2.4.ino` (SIMULATION = `true`).  
+1. No Wokwi (https://wokwi.com/projects/433046881861287937>) abra `GS 2025 FloodDemo (sketch.ino)` (SIMULATION = `true`).  
 2. Clique **Start**.  
 3. O painel atualiza; quando **risco = 1** chega e‑mail de alerta.
 
@@ -156,11 +156,9 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 - <b>.github</b>: Nesta pasta ficarão os arquivos de configuração específicos do GitHub que ajudam a gerenciar e automatizar processos no repositório.
 - <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
-- <b>document</b>: não utilizada nesse projeto
-- <b>scripts</b>: não utilizada nesse projeto
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto.
+- <b>arduino</b>: contém os códigos e diagrama do projeto no WokWi.
+- <b>python</b>: contém os códigos de python referente ao pré-processamento, treinamento de modelo e o dashboard.
 - <b>src/faseX</b>: Pastas que contém o código de cada um dos projetos sendo exibidos em cada uma das páginas do Dashboard.
-- <b>src/dashboard</b>: Código do Dashboard. Engloba a página inicial e cada uma das páginas sendo exibidas em arquivos distintos
 - <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
 
 ## 🗃 Histórico de lançamentos
