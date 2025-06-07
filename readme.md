@@ -90,6 +90,8 @@ python -m streamlit run python/flood_dashboard.py
 3. O painel atualiza; quando **risco = 1** chega e‑mail de alerta.
 
 ---
+## Desenho do Circuito Completo
+![Circuito Completo](assets/circuitocompleto.png)
 
 ## 3 · Hardware real
 
