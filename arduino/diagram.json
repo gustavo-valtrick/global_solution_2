@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "author": "Pedro Scofield",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 0, "left": -4.76, "attrs": {} },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -124.5,
+      "left": -178.2,
+      "attrs": { "humidity": "22.5" }
+    },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -113.7,
+      "left": 168.7,
+      "attrs": { "distance": "9" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": -199.2,
+      "left": 30.6,
+      "attrs": { "volume": "0.1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "ultrasonic1:VCC", "esp:5V", "red", [ "v240", "h-230.4" ] ],
+    [ "ultrasonic1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "ultrasonic1:TRIG", "esp:5", "green", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "esp:18", "green", [ "v0" ] ],
+    [ "dht1:VCC", "esp:3V3", "red", [ "v28.8", "h48" ] ],
+    [ "dht1:GND", "esp:GND.2", "black", [ "v9.6", "h230.4" ] ],
+    [ "dht1:SDA", "esp:15", "green", [ "v76.8", "h134.5", "v-67.2", "h134.4", "v172.8" ] ],
+    [ "bz1:1", "esp:27", "green", [ "v38.4", "h-105.6", "v96" ] ],
+    [ "bz1:2", "esp:GND.1", "green", [ "v57.6", "h-115.6", "v153.6", "h9.6" ] ]
+  ],
+  "dependencies": {}
+}
